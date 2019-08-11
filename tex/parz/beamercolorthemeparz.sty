@@ -1,0 +1,38 @@
+\definecolor{gray}{RGB}{34, 34, 34}
+\definecolor{red}{RGB}{248, 103, 78}
+\definecolor{yellow}{RGB}{255, 212, 59}
+\definecolor{whitesmoke}{RGB}{245, 245, 245}
+\definecolor{vividcerise}{rgb}{0.85, 0.11, 0.51}
+\definecolor{carminepink}{rgb}{0.92, 0.3, 0.26}
+\definecolor{darkelectricblue}{rgb}{0.33, 0.41, 0.47}
+\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
+\definecolor{swiftcoders}{RGB}{243, 85, 41}
+
+% Background color on all slides.
+\setbeamercolor*{background canvas}{bg=gray}
+% Color text by default.
+\setbeamercolor{normal text}{fg=whitesmoke}
+
+\newcommand\HUGE{\@setfontsize\Huge{35}{45}}
+
+\newcommand{\KeyWord}[1]{\textcolor{yellow}{\Bolder{#1}}}
+
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    backgroundcolor=\color{gray},
+    basicstyle=\Large\ttfamily\color{whitesmoke},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    escapeinside={\%*}{*)},
+    keywordstyle=\BoldMonoFont\color{carminepink},
+    identifierstyle=\color{antiquewhite},
+    stringstyle=\color{green},
+    commentstyle=\color{darkelectricblue},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    stepnumber=2,
+    tabsize=2
+}

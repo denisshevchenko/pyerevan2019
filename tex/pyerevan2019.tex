@@ -1,0 +1,297 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tikz}
+\usepackage[skins]{tcolorbox}
+
+\usetheme{parz} % Parz means "simple" in Armenian language.
+
+\begin{document}
+
+\begin{frame}
+    \begin{columns}[c]
+        \begin{column}[c]{15em}
+            \begin{tikzpicture}
+                \node[ circle
+                     , draw
+                     , inner sep=1.6cm
+                     , fill overzoom image=img/me.jpg
+                     ] {};
+            \end{tikzpicture}
+
+            \vspace{2.4em}
+
+            \begin{minipage}{12.5em}
+                \includegraphics[scale=0.30]{img/py_yerevan_left_aligned.png}
+                \normalsize
+                    August 2019
+            \end{minipage}
+        \end{column}
+
+        \begin{column}[c]{15em}
+            \Large
+                Denis Shevchenko
+
+            \vspace{1.4em}
+
+            \large
+                \begin{enumerate}[ leftmargin=0.78em
+                                 , itemsep=0.3em
+                                 , labelsep=0.1em
+                                 , label=\color{gray}\Roman*
+                                 ]
+                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Haskell Developer at IOHK
+                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Co-founder of ruHaskell
+                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Code since 2005
+                \end{enumerate}
+
+            \vspace{1.4em}
+
+            \begin{minipage}{1.5em}
+                \includegraphics[scale=0.02]{img/twitter.png}
+            \end{minipage}
+            \begin{minipage}{6em}
+                \large
+                    @dshevchenko\_biz
+            \end{minipage}
+
+            \vspace{5em}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \HUGE
+        A practical introduction\newline to \KeyWord{functional} programming in Python
+\end{frame}
+
+\begin{frame}
+    \begin{columns}[c]
+        \begin{column}[c]{2.5em}
+            \HUGE
+                FP
+        \end{column}
+
+        \begin{column}[c]{27em}
+            \Huge
+                \begin{enumerate}[ leftmargin=0.5em
+                                 , itemsep=1em
+                                 , labelsep=0.1em
+                                 , label=\color{gray}\Roman*
+                                 ]
+                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}essense
+                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}benefit
+                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}myth
+                \end{enumerate}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \HUGE{FP \MVRightarrow\hspace{0.2em}\KeyWord{essense}}
+\end{frame}
+
+\begin{frame}
+    \Huge
+        \begin{enumerate}[ leftmargin=1.5em
+                         , itemsep=1em
+                         , labelsep=0.5em
+                         , label=\color{darkelectricblue}\Roman*
+                         ]
+            \item Purity
+            \item Immutability
+            \item Higher-order functions
+        \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Purity}
+
+    \begin{lstlisting}[language=Swift]
+func greet(person: String) -> String {
+  let greeting = "Hi, " + person + "!"
+  return greeting
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Purity}
+
+    \begin{lstlisting}[language=Swift]
+func greet(person: String) -> String {
+  launchMissiles() // Ops!
+  let greeting = "Hi, " + person + "!"
+  return greeting
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Purity}
+
+    \begin{lstlisting}[language=Haskell]
+greet :: String -> String
+greet person = greeting
+  where
+    greeting = "Hi, " <> person <> "!"
+    \end{lstlisting}
+    \vspace{0.8em}
+    \huge{\KeyWord{Cannot} launch missiles!}
+\end{frame}
+
+\begin{frame}[t]
+    \vspace{0.8em}
+    \Huge{Immutability}
+
+    \centering
+        \begin{figure}[b]
+        \includegraphics[scale=0.35]{img/smart.jpg}
+        \end{figure}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Immutability}
+
+    \begin{lstlisting}[language=Swift]
+class Car {
+  var make: String
+  var model: String
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Immutability}
+
+    \begin{lstlisting}[language=Swift]
+let car = Car(make: "VW", model: "Polo")
+...
+car.make = "Toyota" // Toyota Polo??
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Immutability}
+
+    \begin{lstlisting}[language=Swift]
+struct Car {
+  let make: String
+  let model: String
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Immutability}
+
+    \begin{lstlisting}[language=Swift]
+let car = Car(make: "VW", model: "Polo")
+// VW Polo forever!
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Higher-order functions}
+
+    \begin{lstlisting}[language=Swift]
+let values = [11, 13, 14, 17, 21, 33, 22]
+var even : [Int] = []
+for v in values {
+  if v % 2 == 0 {
+    even.append(v)
+  }
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \vspace{0.8em}
+    \Huge{Higher-order functions}
+
+    \begin{lstlisting}[language=Swift]
+let values = [11, 13, 14, 17, 21, 33, 22]
+let even = values.filter { $0 % 2 == 0 }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \HUGE{FP \MVRightarrow\hspace{0.2em}\KeyWord{benefit}}
+\end{frame}
+
+\begin{frame}
+    \HUGE{Code with \KeyWord{less}}
+
+    \HUGE{surprises}
+\end{frame}
+
+\begin{frame}
+    \HUGE{Easier to \KeyWord{reason} about}
+\end{frame}
+
+\begin{frame}
+    \HUGE{Easier to \KeyWord{maintain}}
+\end{frame}
+
+\begin{frame}
+    \HUGE{Easier to \KeyWord{test}}
+\end{frame}
+
+\begin{frame}
+    \begin{columns}[c]
+        \begin{column}[c]{2.5em}
+            \HUGE
+                FP
+        \end{column}
+
+        \begin{column}[c]{27em}
+            \huge
+                \begin{enumerate}[ leftmargin=0.5em
+                                 , itemsep=1em
+                                 , labelsep=0.1em
+                                 , label=\color{gray}\Roman*
+                                 ]
+                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Love purity and immutability
+                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Code with \KeyWord{less} surprises
+                \end{enumerate}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \HUGE{What's \KeyWord{next}?}
+\end{frame}
+
+\begin{frame} 
+    \Huge{«A practical introduction}
+
+    \Huge{\hspace{0.55em}to functional programming»}
+
+    \vspace{1em}
+
+    \Huge{bit.do/\KeyWord{fpPython}}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \Huge{Thank you!}
+
+        \HUGE{\KeyWord{Questions?}}
+\end{frame}
+
+\end{document}
