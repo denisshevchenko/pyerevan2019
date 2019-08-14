@@ -7,8 +7,15 @@
 \usepackage{marvosym}
 \usepackage{tikz}
 \usepackage[skins]{tcolorbox}
+\usepackage[normalem]{ulem}
 
 \usetheme{parz} % Parz means "simple" in Armenian language.
+
+\newcommand{\soutthick}[1]{%
+    \renewcommand{\ULthickness}{2.4pt}%
+       \sout{#1}%
+    \renewcommand{\ULthickness}{.4pt}% Resetting to ulem default
+}
 
 \begin{document}
 
@@ -66,221 +73,91 @@
 
 \begin{frame}
     \HUGE
-        A practical introduction\newline to \KeyWord{functional} programming in Python
-\end{frame}
-
-\begin{frame}
-    \begin{columns}[c]
-        \begin{column}[c]{2.5em}
-            \HUGE
-                FP
-        \end{column}
-
-        \begin{column}[c]{27em}
-            \Huge
-                \begin{enumerate}[ leftmargin=0.5em
-                                 , itemsep=1em
-                                 , labelsep=0.1em
-                                 , label=\color{gray}\Roman*
-                                 ]
-                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}essense
-                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}benefit
-                    \item [\KeyWord{\MVRightarrow}]\hspace{0.5em}myth
-                \end{enumerate}
-        \end{column}
-    \end{columns}
+        A practical introduction\newline to \KeyWord{FP} in Python
 \end{frame}
 
 \begin{frame}
     \centering
-        \HUGE{FP \MVRightarrow\hspace{0.2em}\KeyWord{essense}}
+        \HUGE
+            FP?
 \end{frame}
 
 \begin{frame}
-    \Huge
-        \begin{enumerate}[ leftmargin=1.5em
-                         , itemsep=1em
-                         , labelsep=0.5em
-                         , label=\color{darkelectricblue}\Roman*
-                         ]
-            \item Purity
-            \item Immutability
-            \item Higher-order functions
-        \end{enumerate}
+    \HUGE
+        FP --- \KeyWord{rewrite} your code?
 \end{frame}
 
 \begin{frame}[fragile,t]
     \vspace{0.8em}
-    \Huge{Purity}
+    \Huge{OOP's \KeyWord{for}}
 
-    \begin{lstlisting}[language=Swift]
-func greet(person: String) -> String {
-  let greeting = "Hi, " + person + "!"
-  return greeting
-}
+    \begin{lstlisting}[language=Python]
+names = ['David', 'Karen', 'Ruben']
+secret_names = []
+for i in range(len(names)):
+    secret_names.append(hash(names[i]))
     \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile,t]
     \vspace{0.8em}
-    \Huge{Purity}
+    \Huge{FP's \KeyWord{map}}
 
-    \begin{lstlisting}[language=Swift]
-func greet(person: String) -> String {
-  launchMissiles() // Ops!
-  let greeting = "Hi, " + person + "!"
-  return greeting
-}
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Purity}
-
-    \begin{lstlisting}[language=Haskell]
-greet :: String -> String
-greet person = greeting
-  where
-    greeting = "Hi, " <> person <> "!"
-    \end{lstlisting}
-    \vspace{0.8em}
-    \huge{\KeyWord{Cannot} launch missiles!}
-\end{frame}
-
-\begin{frame}[t]
-    \vspace{0.8em}
-    \Huge{Immutability}
-
-    \centering
-        \begin{figure}[b]
-        \includegraphics[scale=0.35]{img/smart.jpg}
-        \end{figure}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Immutability}
-
-    \begin{lstlisting}[language=Swift]
-class Car {
-  var make: String
-  var model: String
-}
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Immutability}
-
-    \begin{lstlisting}[language=Swift]
-let car = Car(make: "VW", model: "Polo")
-...
-car.make = "Toyota" // Toyota Polo??
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Immutability}
-
-    \begin{lstlisting}[language=Swift]
-struct Car {
-  let make: String
-  let model: String
-}
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Immutability}
-
-    \begin{lstlisting}[language=Swift]
-let car = Car(make: "VW", model: "Polo")
-// VW Polo forever!
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Higher-order functions}
-
-    \begin{lstlisting}[language=Swift]
-let values = [11, 13, 14, 17, 21, 33, 22]
-var even : [Int] = []
-for v in values {
-  if v % 2 == 0 {
-    even.append(v)
-  }
-}
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile,t]
-    \vspace{0.8em}
-    \Huge{Higher-order functions}
-
-    \begin{lstlisting}[language=Swift]
-let values = [11, 13, 14, 17, 21, 33, 22]
-let even = values.filter { $0 % 2 == 0 }
+    \begin{lstlisting}[language=Python]
+names = ['David', 'Karen', 'Ruben']
+secret_names = map(hash, names)
     \end{lstlisting}
 \end{frame}
 
 \begin{frame}
-    \centering
-        \HUGE{FP \MVRightarrow\hspace{0.2em}\KeyWord{benefit}}
+    \HUGE
+        \hspace{2.35em}\KeyWord{rethink}\newline
+        FP --- \soutthick{rewrite} your code!
 \end{frame}
 
-\begin{frame}
-    \HUGE{Code with \KeyWord{less}}
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+a = 0
 
-    \HUGE{surprises}
+def inc():
+    a += 1
+
+def checker():
+    if a > 12:
+        print("Enough!")
+    else:
+        print("Too small yet")
+    \end{lstlisting}
 \end{frame}
 
-\begin{frame}
-    \HUGE{Easier to \KeyWord{reason} about}
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+def inc(a):
+    a += 1
+    return a
+
+def checker(a):
+    if a > 12:
+        print("Enough!")
+    else:
+        print("Too small yet")
+    \end{lstlisting}
 \end{frame}
 
-\begin{frame}
-    \HUGE{Easier to \KeyWord{maintain}}
-\end{frame}
 
-\begin{frame}
-    \HUGE{Easier to \KeyWord{test}}
-\end{frame}
 
-\begin{frame}
-    \begin{columns}[c]
-        \begin{column}[c]{2.5em}
-            \HUGE
-                FP
-        \end{column}
 
-        \begin{column}[c]{27em}
-            \huge
-                \begin{enumerate}[ leftmargin=0.5em
-                                 , itemsep=1em
-                                 , labelsep=0.1em
-                                 , label=\color{gray}\Roman*
-                                 ]
-                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Love purity and immutability
-                    \item [\KeyWord{\Checkedbox}]\hspace{0.5em}Code with \KeyWord{less} surprises
-                \end{enumerate}
-        \end{column}
-    \end{columns}
-\end{frame}
+
 
 \begin{frame}
     \centering
         \HUGE{What's \KeyWord{next}?}
 \end{frame}
 
-\begin{frame} 
+\begin{frame}
     \Huge{«A practical introduction}
 
-    \Huge{\hspace{0.55em}to functional programming»}
+    \Huge{\hspace{0.59em}to functional programming»}
 
     \vspace{1em}
 
