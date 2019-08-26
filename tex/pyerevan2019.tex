@@ -6,13 +6,14 @@
 \usepackage{enumitem}
 \usepackage{marvosym}
 \usepackage{tikz}
+\usepackage{tikz-cd}
 \usepackage[skins]{tcolorbox}
 \usepackage[normalem]{ulem}
 
 \usetheme{parz} % Parz means "simple" in Armenian language.
 
 \newcommand{\soutthick}[1]{%
-    \renewcommand{\ULthickness}{2.4pt}%
+    \renewcommand{\ULthickness}{5.4pt}%
        \sout{#1}%
     \renewcommand{\ULthickness}{.4pt}% Resetting to ulem default
 }
@@ -84,7 +85,7 @@
 
 \begin{frame}
     \HUGE
-        FP --- \KeyWord{rewrite} your code?
+        FP --- \KeyWord{rewrite} your code!
 \end{frame}
 
 \begin{frame}[fragile,t]
@@ -93,9 +94,9 @@
 
     \begin{lstlisting}[language=Python]
 names = ['David', 'Karen', 'Ruben']
-secret_names = []
+secrets = []
 for i in range(len(names)):
-    secret_names.append(hash(names[i]))
+    secrets.append(hash(names[i]))
     \end{lstlisting}
 \end{frame}
 
@@ -105,49 +106,253 @@ for i in range(len(names)):
 
     \begin{lstlisting}[language=Python]
 names = ['David', 'Karen', 'Ruben']
-secret_names = map(hash, names)
+secrets = map(hash, names)
     \end{lstlisting}
 \end{frame}
 
 \begin{frame}
     \HUGE
-        \hspace{2.35em}\KeyWord{rethink}\newline
+        \hspace{2.32em}\KeyWord{rethink}\newline
         FP --- \soutthick{rewrite} your code!
 \end{frame}
 
 \begin{frame}[fragile,t]
     \begin{lstlisting}[language=Python]
-a = 0
-
 def inc():
+    global a
     a += 1
 
-def checker():
+def check():
     if a > 12:
         print("Enough!")
-    else:
-        print("Too small yet")
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{lstlisting}[language=Python]
+a = 3
+
+inc()
+check()
     \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile,t]
     \begin{lstlisting}[language=Python]
 def inc(a):
-    a += 1
-    return a
+    return(a + 1)
 
-def checker(a):
+def check(a):
     if a > 12:
-        print("Enough!")
-    else:
-        print("Too small yet")
+        return "Enough!"
     \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+    \begin{lstlisting}[language=Python]
+print(check(inc(3)))
+    \end{lstlisting}
+\end{frame}
 
+\begin{frame}
+    \centering
+        \Huge{\KeyWord{Compose} your functions}
+\end{frame}
 
+\begin{frame}[fragile]
+    \begin{figure}[!h]
+        \centering
+            \begin{tikzcd}[transform canvas={scale=2.4}]
+                A \arrow[thick, r, "f"]
+                  \arrow[thick, rr, out=-35, in=215, swap, awesome, "g\ \ \circ\ \ f"]
+                &[2.3em] B \arrow[thick, r, "g"]
+                &[2.3em] C
+            \end{tikzcd}
+    \end{figure}
+\end{frame}
 
+\begin{frame}[fragile]
+    \begin{figure}[!h]
+        \centering
+            \begin{tikzcd}[transform canvas={scale=2.4}]
+                A \arrow[thick, r, "inc"]
+                  \arrow[thick, rr, out=-35, in=215, swap, awesome, "check\ \ \circ\ \ inc"]
+                &[2.3em] B \arrow[thick, r, "check"]
+                &[2.3em] C
+            \end{tikzcd}
+    \end{figure}
+\end{frame}
 
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+from infix import shift_infix as infix
+
+@infix
+def then(f, g):
+    return lambda x: g(f(x))
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+do = inc <<then>> check
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+do = inc <<then>> check
+
+do_all = do <<then>> print
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+do = inc <<then>> check
+
+do_all = do <<then>> print
+
+...
+
+do_all(3)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \Huge{Use \KeyWord{fair} constants}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+PI = 3.14159265
+
+...
+
+def calcCircLength(r: float) -> float:
+    return 2 * PI * r
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+import cmath
+
+...
+
+def circle_length(r: float) -> float:
+    return 2 * cmath.pi * r
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+import cmath
+
+cmath.pi = 3.129 # Bad joke!
+
+def circle_length(r: float) -> float:
+    return 2 * cmath.pi * r
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+def pi() -> float:
+    return 3.14159265
+
+...
+
+def circle_length(r: float) -> float:
+    return 2 * pi() * r
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \HUGE{Math?!}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \Huge
+            $M = (S, \bullet, e)$
+\end{frame}
+
+\begin{frame}
+    \Huge
+        \begin{enumerate}[ leftmargin=1.5em
+                         , itemsep=1em
+                         , labelsep=0.5em
+                         , label=\color{darkelectricblue}\Roman*
+                         ]
+            \item $S = \{...\}$
+            \item $\bullet = S \times S \to S$
+            \item $\exists e \in S: e \bullet a = a \bullet e = a$
+        \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \centering
+        \begin{figure}[b]
+            \includegraphics[scale=0.51]{img/what.jpg}
+        \end{figure}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+https_prefix = "https://"
+base_url     = "istc.am"
+secure_url   = https_prefix + base_url
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+https_prefix = "https://"
+base_url     = "istc.am"
+secure_url   = https_prefix + base_url
+    \end{lstlisting}
+
+    \vspace{2em}
+
+    \centering
+        \Huge
+            Monoid --- \KeyWord{idea}!
+\end{frame}
+
+\begin{frame}[fragile,t]
+    \begin{lstlisting}[language=Python]
+https_prefix = "https://"
+base_url     = "istc.am"
+secure_url   = https_prefix + base_url
+    \end{lstlisting}
+
+    \vspace{2em}
+
+    \centering
+        \Huge
+            Take \KeyWord{existent}, create \KeyWord{new}.
+\end{frame}
+
+\begin{frame}
+    \centering
+        \HUGE{So...}
+\end{frame}
+
+\begin{frame}
+    \Huge
+        \begin{enumerate}[ leftmargin=1.5em
+                         , itemsep=1em
+                         , labelsep=0.5em
+                         , label=\color{darkelectricblue}\Roman*
+                         ]
+            \item \KeyWord{Compose} your functions
+            \item Use \KeyWord{fair} constants
+            \item Don't be \KeyWord{afraid} of math
+        \end{enumerate}
+\end{frame}
 
 \begin{frame}
     \centering
